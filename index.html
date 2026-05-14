@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuestMarker — Turn Every Task Into an Epic Quest</title>
+    <meta name="description" content="Your daily tasks, transformed. QuestMarker turns ordinary to-dos into immersive game-style quests with stunning visual skins. iOS app with Cybershock, Nukeboy & Helljumpers themes.">
+    <meta property="og:title" content="QuestMarker — Turn Every Task Into an Epic Quest">
+    <meta property="og:description" content="Gamified to-do app with cyberpunk, retro-terminal & tactical sci-fi skins. Your tasks have never looked this good.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #0A0A0F; --surface: #14141F; --surface-elevated: #1A1A28; --primary: #FFFFFF; --accent: #00F0FF; --accent-glow: rgba(0, 240, 255, 0.25); --accent-secondary: #FF2D6B; --accent-secondary-glow: rgba(255, 45, 107, 0.25); --nukeboy: #39FF14; --helljumpers: #FFB800; --secondary: #6B7280; --border: #1F1F2E; }
+        * { margin: 0; padding: 0; box-sizing: border-box; } html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--primary); line-height: 1.6; overflow-x: hidden; }
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 16px 24px; background: rgba(10, 10, 15, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; display: flex; align-items: center; gap: 10px; }
+        .logo-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { color: var(--secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 24px 80px; position: relative; overflow: hidden; }
+        .hero-bg { position: absolute; inset: 0; pointer-events: none; }
+        .hero-glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.4; }
+        .hero-glow-2 { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--accent-secondary-glow) 0%, transparent 70%); top: 30%; right: 10%; transform: translate(50%, -50%); opacity: 0.3; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; font-size: 13px; font-weight: 500; color: var(--secondary); margin-bottom: 32px; }
+        .hero-badge span { color: var(--accent); }
+        .hero h1 { font-size: clamp(40px, 8vw, 72px); font-weight: 700; letter-spacing: -2px; line-height: 1.1; margin-bottom: 24px; max-width: 900px; }
+        .hero h1 .accent { background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-subtitle { font-size: 18px; color: var(--secondary); max-width: 540px; margin-bottom: 48px; line-height: 1.7; }
+        .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+        .phone-mockup-hero { margin-top: 64px; }
+        .phone-frame { width: 280px; background: var(--surface); border-radius: 44px; border: 2px solid var(--border); padding: 12px; box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 40px 80px rgba(0,0,0,0.5), 0 0 80px var(--accent-glow); }
+        .phone-screen { width: 100%; aspect-ratio: 9/19.5; background: var(--bg); border-radius: 34px; overflow: hidden; position: relative; }
+        .phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 28px; background: var(--bg); border-radius: 0 0 20px 20px; z-index: 10; }
+        .skins-section { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
+        .skins-header { text-align: center; margin-bottom: 80px; }
+        .section-label { font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+        .section-title { font-size: clamp(28px, 5vw, 42px); font-weight: 700; letter-spacing: -1px; margin-bottom: 16px; }
+        .section-subtitle { font-size: 17px; color: var(--secondary); max-width: 500px; margin: 0 auto; }
+        .skins-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+        .skin-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 32px; text-align: center; transition: all 0.3s; }
+        .skin-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+        .skin-card.cybershock { border-color: var(--accent); box-shadow: 0 0 40px var(--accent-glow); }
+        .skin-card.nukeboy { border-color: var(--nukeboy); box-shadow: 0 0 40px rgba(57, 255, 20, 0.15); }
+        .skin-card.helljumpers { border-color: var(--helljumpers); box-shadow: 0 0 40px rgba(255, 184, 0, 0.15); }
+        .skin-icon { width: 64px; height: 64px; border-radius: 16px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
+        .cybershock .skin-icon { background: linear-gradient(135deg, var(--accent), #0060FF); }
+        .nukeboy .skin-icon { background: linear-gradient(135deg, var(--nukeboy), #00AA00); }
+        .helljumpers .skin-icon { background: linear-gradient(135deg, var(--helljumpers), #FF8800); }
+        .skin-name { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+        .cybershock .skin-name { color: var(--accent); }
+        .nukeboy .skin-name { color: var(--nukeboy); }
+        .helljumpers .skin-name { color: var(--helljumpers); }
+        .skin-desc { font-size: 14px; color: var(--secondary); line-height: 1.6; }
+        .features { padding: 100px 24px; background: var(--surface); }
+        .features-inner { max-width: 1200px; margin: 0 auto; }
+        .features-header { text-align: center; margin-bottom: 64px; }
+        .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+        .feature-card { background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 32px; }
+        .feature-icon { width: 48px; height: 48px; background: var(--surface-elevated); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 16px; }
+        .feature-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .feature-desc { font-size: 14px; color: var(--secondary); line-height: 1.6; }
+        .cta-section { padding: 120px 24px; text-align: center; }
+        .cta-title { font-size: clamp(32px, 6vw, 52px); font-weight: 700; letter-spacing: -1.5px; margin-bottom: 24px; }
+        .cta-subtitle { font-size: 18px; color: var(--secondary); max-width: 480px; margin: 0 auto 40px; }
+        .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+        .btn-primary { background: var(--accent); color: var(--bg); }
+        .btn-primary:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn-secondary { background: var(--surface); color: var(--primary); border: 1px solid var(--border); }
+        .btn-secondary:hover { background: var(--surface-elevated); }
+        footer { padding: 48px 24px; border-top: 1px solid var(--border); text-align: center; }
+        footer p { color: var(--secondary); font-size: 14px; }
+        footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        @media (max-width: 768px) { .skins-grid, .features-grid { grid-template-columns: 1fr; } .hero h1 { letter-spacing: -1px; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo"><div class="logo-icon">⚔</div>QuestMarker</div>
+            <ul class="nav-links"><li><a href="#skins">Skins</a></li><li><a href="#features">Features</a></li><li><a href="https://github.com/rep0mancer/questmarker-landing">GitHub</a></li></ul>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="hero-bg"><div class="hero-glow"></div><div class="hero-glow-2"></div></div>
+        <div class="hero-badge">✨ <span>iOS App</span> — SwiftUI-powered</div>
+        <h1>Every Task Is a <span class="accent">Quest</span></h1>
+        <p class="hero-subtitle">QuestMarker transforms your daily to-dos into immersive game-style missions. Choose your skin. Complete your objectives. Level up your productivity.</p>
+        <div class="hero-cta">
+            <a href="#" class="btn btn-primary">Coming Soon to App Store</a>
+            <a href="https://github.com/rep0mancer/questmarker-landing" class="btn btn-secondary">View on GitHub</a>
+        </div>
+        <div class="phone-mockup-hero">
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="phone-notch"></div>
+                    <div style="padding: 40px 16px 16px; text-align: center;">
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); margin-bottom: 16px;">▸ ACTIVE QUESTS</div>
+                        <div style="background: var(--surface); border-radius: 12px; padding: 12px; margin-bottom: 8px; border-left: 3px solid var(--accent); text-align: left;"><div style="font-size: 13px; font-weight: 600;">Submit quarterly report</div><div style="font-size: 11px; color: var(--secondary); margin-top: 4px;">REWARD: 150 XP</div></div>
+                        <div style="background: var(--surface); border-radius: 12px; padding: 12px; margin-bottom: 8px; border-left: 3px solid var(--nukeboy); text-align: left;"><div style="font-size: 13px; font-weight: 600;">Call the dentist</div><div style="font-size: 11px; color: var(--secondary); margin-top: 4px;">REWARD: 50 XP</div></div>
+                        <div style="background: var(--surface); border-radius: 12px; padding: 12px; border-left: 3px solid var(--helljumpers); text-align: left;"><div style="font-size: 13px; font-weight: 600;">Morning workout</div><div style="font-size: 11px; color: var(--secondary); margin-top: 4px;">REWARD: 75 XP</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="skins-section" id="skins">
+        <div class="skins-header">
+            <div class="section-label">Visual Skins</div>
+            <h2 class="section-title">Choose Your Interface</h2>
+            <p class="section-subtitle">Three distinct visual themes — switch anytime without losing any data</p>
+        </div>
+        <div class="skins-grid">
+            <div class="skin-card cybershock"><div class="skin-icon">🌃</div><div class="skin-name">Cybershock</div><p class="skin-desc">Neon-soaked sci-fi journal. Glitch effects, scanlines, and a cyberpunk terminal aesthetic.</p></div>
+            <div class="skin-card nukeboy"><div class="skin-icon">💀</div><div class="skin-name">Nukeboy</div><p class="skin-desc">Retro phosphor wrist-terminal. CRT glow, terminal pulses, and 80s post-apocalyptic vibes.</p></div>
+            <div class="skin-card helljumpers"><div class="skin-icon">🚀</div><div class="skin-name">Helljumpers 2</div><p class="skin-desc">Tactical galactic ops-map. Radar sweeps, orbital beams, and military precision.</p></div>
+        </div>
+    </section>
+    <section class="features" id="features">
+        <div class="features-inner">
+            <div class="features-header"><div class="section-label">Features</div><h2 class="section-title">Built for Real Life</h2></div>
+            <div class="features-grid">
+                <div class="feature-card"><div class="feature-icon">📋</div><div class="feature-title">Full Task Editor</div><p class="feature-desc">Title, notes, objectives, attachments, due dates, reminders, repeat rules, priority & categories.</p></div>
+                <div class="feature-card"><div class="feature-icon">🔔</div><div class="feature-title">Smart Reminders</div><p class="feature-desc">Local notifications scheduled per quest. Never miss a mission-critical deadline.</p></div>
+                <div class="feature-card"><div class="feature-icon">♻️</div><div class="feature-title">Trash & Restore</div><p class="feature-desc">Accidentally deleted? Restore from trash within the session or permanently purge.</p></div>
+                <div class="feature-card"><div class="feature-icon">💾</div><div class="feature-title">Persistent Storage</div><p class="feature-desc">All quests saved locally. Your data stays on your device — no cloud required.</p></div>
+                <div class="feature-card"><div class="feature-icon">🎨</div><div class="feature-title">Skin Independence</div><p class="feature-desc">Create a quest in one skin — it's fully visible and editable in every other skin too.</p></div>
+                <div class="feature-card"><div class="feature-icon">⚡</div><div class="feature-title">Haptic Feedback</div><p class="feature-desc">Satisfying completion animations with skin-specific haptics. Every quest feels earned.</p></div>
+            </div>
+        </div>
+    </section>
+    <section class="cta-section">
+        <h2 class="cta-title">Ready to Level Up?</h2>
+        <p class="cta-subtitle">QuestMarker is coming to the App Store. Subscribe for early access or fork the project on GitHub.</p>
+        <div class="cta-buttons">
+            <a href="https://github.com/rep0mancer/questmarker-landing" class="btn btn-primary">View on GitHub</a>
+            <a href="https://github.com/rep0mancer/QuestMarker" class="btn btn-secondary">Source Code</a>
+        </div>
+    </section>
+    <footer><p>QuestMarker © 2026 · Built with SwiftUI · <a href="https://github.com/rep0mancer">@rep0mancer</a></p></footer>
+</body>
+</html>
